@@ -15,3 +15,12 @@
   gap: 6.25rem;
   align-content: center;
 }
+
+@media (max-width: 1400px) {
+  .container {
+    padding: 1rem 2rem;
+  }
+  .container section {
+    margin-top: 2rem;
+  }
+}

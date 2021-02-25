@@ -56,8 +56,42 @@
   font-weight: 600;
 
   transition: background-color 0.2s;
+
+  position: relative;
 }
 
-.countDownButton:hover {
+.countDownButton > img {
+  margin-left: 1rem;
+}
+
+.countDownButton:disabled {
+  background: var(--white);
+  color: var(--text);
+  cursor: not-allowed;
+}
+
+.countDownButton:disabled:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 0 0 5px 5px;
+  background: var(--green);
+}
+
+.countDownButton:not(:disabled):hover {
   background: var(--blue-dark);
+}
+
+.countDownButtonActive {
+  background: var(--white);
+  color: var(--title);
+}
+
+.countDownButtonActive:not(:disabled):hover {
+  background: var(--red);
+  color: var(--white);
 }
