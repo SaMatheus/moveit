@@ -9,6 +9,7 @@ import { Profile } from '../components/Profile';
 import { CompletedChallenges } from '../components/CompletedChallenges';
 import { CountDown } from '../components/CountDown';
 import { ChallengeBox } from '../components/ChallengeBox';
+import { CountdownProvider } from '../contexts/CountDownContext';
 
 export default function Home() {
   return (
@@ -17,17 +18,18 @@ export default function Home() {
         <title>Início | Moveit</title>
       </Head>
       <ExperienceBar />
-
-      <section>
-        <div>
-          <Profile />
-          <CompletedChallenges />
-          <CountDown />
-        </div>
-        <div>
-          <ChallengeBox />
-        </div>
-      </section>
+      <CountdownProvider>
+        <section>
+          <div>
+            <Profile />
+            <CompletedChallenges />
+            <CountDown />
+          </div>
+          <div>
+            <ChallengeBox />
+          </div>
+        </section>
+      </CountdownProvider>
     </div>
   );
 }
