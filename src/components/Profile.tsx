@@ -11,7 +11,7 @@ export function Profile() {
         <strong>Matheus Sá</strong>
         <p>
           <img src='icons/level.svg' alt='level' />
-          {level}
+          Level {level}
         </p>
       </div>
     </div>

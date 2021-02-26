@@ -24,3 +24,15 @@
     margin-top: 2rem;
   }
 }
+
+@media (max-width: 700px) {
+  .container {
+    height: 100%;
+    padding: 1rem;
+  }
+  .container section {
+    grid-template-columns: 1fr;
+    gap: 4rem 0;
+    margin-top: 5rem;
+  }
+}
