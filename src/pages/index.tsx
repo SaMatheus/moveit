@@ -1,61 +1,82 @@
 import Head from 'next/head';
 
-import { GetServerSideProps } from 'next';
+import styles from '../styles/pages/Login.module.css';
+import { useState } from 'react';
 
-// STYLES
-import styles from '../styles/pages/Home.module.css';
+function Login() {
+  const [inputValue, setInputValue] = useState('');
+  const [isValid, setIsValid] = useState(null);
+  const [fetchData, setFetchData] = useState(null);
+  const [fetchError, setFetchError] = useState('');
 
-// COMPONENTS
-import { ExperienceBar } from '../components/ExperienceBar';
-import { Profile } from '../components/Profile';
-import { CompletedChallenges } from '../components/CompletedChallenges';
-import { CountDown } from '../components/CountDown';
-import { ChallengeBox } from '../components/ChallengeBox';
-import { CountdownProvider } from '../contexts/CountDownContext';
-import { ChallengesProvider } from '../contexts/ChallengesContext';
+  const fetchGithubAPI = () => {
+    fetch(`https://api.github.com/users/${inputValue.toLowerCase()}`)
+      .then((response) => {
+        if (response.status === 200) {
+          setFetchError('');
+          setIsValid(true);
+          return response.json();
+        }
+        if (response.status === 404) {
+          return setFetchError('Usuário não encontrado');
+        } else {
+          setFetchError('Erro:' + response);
+        }
+      })
+      .then((json) => setFetchData(json));
+  };
 
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
+  const handleClickLogin = () => {
+    fetchGithubAPI();
+    if (isValid) {
+      console.log('Entrou');
+    }
+  };
 
-export default function Home(props: HomeProps) {
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const button = document.getElementById('button');
+    const newValue = e.currentTarget.value;
+
+    setInputValue(newValue);
+
+    if (newValue !== '' && isValid) {
+      button.style.background = '#4CD62B';
+    }
+    if (newValue !== '' && !isValid) {
+      button.style.background = '#e83f5b';
+    } else {
+      button.style.background = '#4953b8';
+    }
+  };
+
   return (
-    <ChallengesProvider
-      level={props.level}
-      currentExperience={props.currentExperience}
-      challengesCompleted={props.challengesCompleted}
-    >
-      <div className={styles.container}>
-        <Head>
-          <title>Início | Move.it</title>
-        </Head>
-        <ExperienceBar />
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <CountDown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </div>
-    </ChallengesProvider>
+    <div className={styles.container}>
+      <img src='/background.png' alt='' />
+      <Head>
+        <title>Login | Productiv.it</title>
+      </Head>
+      <section>
+        <img src='/login-logo.svg' alt='logomarca' />
+        <div className={styles.content}>
+          <h1>Bem-vindo</h1>
+          <div className={styles.githubContent}>
+            <img src='/icons/github.svg' alt='icone do github' />
+            <p>Faça login com seu Github para começar</p>
+          </div>
+          <div className={styles.button}>
+            <input
+              type='text'
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+            <button id='button' type='button' onClick={handleClickLogin}>
+              <img src='/icons/arrow-vector.svg' alt='seta para a direita' />
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-  return {
-    props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted),
-    },
-  };
-};
+export default Login;

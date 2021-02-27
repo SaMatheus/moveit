@@ -1,8 +1,8 @@
-import styles from '../styles/components/CountDown.module.css';
+import styles from '../../styles/components/index/CountDown.module.css';
 
 // HOOKS
 import { useContext } from 'react';
-import { CountdownContext } from '../contexts/CountDownContext';
+import { CountdownContext } from '../../contexts/CountDownContext';
 
 export function CountDown() {
   const {
