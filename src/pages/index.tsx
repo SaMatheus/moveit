@@ -1,37 +1,14 @@
 import Head from 'next/head';
 
 import styles from '../styles/pages/Login.module.css';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
+import { LoginContext } from '../contexts/LoginContext';
 
-function Login() {
+export default function Login() {
   const [inputValue, setInputValue] = useState('');
-  const [isValid, setIsValid] = useState(null);
-  const [fetchData, setFetchData] = useState(null);
-  const [fetchError, setFetchError] = useState('');
-
-  const fetchGithubAPI = () => {
-    fetch(`https://api.github.com/users/${inputValue.toLowerCase()}`)
-      .then((response) => {
-        if (response.status === 200) {
-          setFetchError('');
-          setIsValid(true);
-          return response.json();
-        }
-        if (response.status === 404) {
-          return setFetchError('Usuário não encontrado');
-        } else {
-          setFetchError('Erro:' + response);
-        }
-      })
-      .then((json) => setFetchData(json));
-  };
-
-  const handleClickLogin = () => {
-    fetchGithubAPI();
-    if (isValid) {
-      console.log('Entrou');
-    }
-  };
+  const { fetchError, isValid, fetchGithubAPI } = useContext(LoginContext);
+  const router = useRouter();
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const button = document.getElementById('button');
@@ -39,13 +16,17 @@ function Login() {
 
     setInputValue(newValue);
 
-    if (newValue !== '' && isValid) {
+    if (newValue !== '') {
       button.style.background = '#4CD62B';
-    }
-    if (newValue !== '' && !isValid) {
-      button.style.background = '#e83f5b';
     } else {
       button.style.background = '#4953b8';
+    }
+  };
+
+  const handleLogin = () => {
+    fetchGithubAPI(inputValue);
+    if (isValid) {
+      router.push('/home');
     }
   };
 
@@ -69,14 +50,13 @@ function Login() {
               value={inputValue}
               onChange={handleInputChange}
             />
-            <button id='button' type='button' onClick={handleClickLogin}>
+            <button id='button' type='button' onClick={handleLogin}>
               <img src='/icons/arrow-vector.svg' alt='seta para a direita' />
             </button>
           </div>
+          {fetchError && <span>{fetchError}</span>}
         </div>
       </section>
     </div>
   );
 }
-
-export default Login;

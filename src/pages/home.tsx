@@ -13,6 +13,7 @@ import { CountDown } from '../components/index/CountDown';
 import { ChallengeBox } from '../components/index/ChallengeBox';
 import { CountdownProvider } from '../contexts/CountDownContext';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
+import { LoginProvider } from '../contexts/LoginContext';
 
 interface HomeProps {
   level: number;
@@ -20,7 +21,7 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
-function Home(props: HomeProps) {
+export default function Home(props: HomeProps) {
   return (
     <ChallengesProvider
       level={props.level}
@@ -32,18 +33,20 @@ function Home(props: HomeProps) {
           <title>Início | Productiv.it</title>
         </Head>
         <ExperienceBar />
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <CountDown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
+        <LoginProvider>
+          <CountdownProvider>
+            <section>
+              <div>
+                <Profile />
+                <CompletedChallenges />
+                <CountDown />
+              </div>
+              <div>
+                <ChallengeBox />
+              </div>
+            </section>
+          </CountdownProvider>
+        </LoginProvider>
       </div>
     </ChallengesProvider>
   );
@@ -59,5 +62,3 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
-
-export default Home;

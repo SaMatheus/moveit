@@ -117,6 +117,11 @@
   border: 1.5px solid #414aa3;
 }
 
+.content > span {
+  margin-top: 1rem;
+  color: var(--red-error);
+}
+
 @media (max-width: 1400px) {
   .container > img {
     width: 668px;
