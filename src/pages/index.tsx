@@ -1,13 +1,15 @@
 import Head from 'next/head';
 
 import styles from '../styles/pages/Login.module.css';
+// HOOKS
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
-import { LoginContext } from '../contexts/LoginContext';
+import { useState } from 'react';
+
+import { useLogin } from '../contexts/LoginContext';
 
 export default function Login() {
   const [inputValue, setInputValue] = useState('');
-  const { fetchError, isValid, fetchGithubAPI } = useContext(LoginContext);
+  const { fetchError, isValid, fetchGithubAPI } = useLogin();
   const router = useRouter();
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {

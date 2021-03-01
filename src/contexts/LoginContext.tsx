@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode, useContext } from 'react';
 
 interface LoginContextData {
   fetchError: string;
@@ -12,6 +12,16 @@ interface LoginProviderProps {
 }
 
 export const LoginContext = createContext({} as LoginContextData);
+
+export function useLogin(): LoginContextData {
+  const context = useContext(LoginContext);
+
+  if (!context) {
+    throw new Error('useLogin deve ser usado como AuthProvider');
+  }
+
+  return context;
+}
 
 export function LoginProvider({ children }: LoginProviderProps) {
   const [isValid, setIsValid] = useState(false);
