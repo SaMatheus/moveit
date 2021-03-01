@@ -1,19 +1,20 @@
 import styles from '../../styles/components/index/Profile.module.css';
 import { useContext } from 'react';
 import { ChallengesContext } from '../../contexts/ChallengesContext';
-import { LoginContext } from '../../contexts/LoginContext';
+import Cookies from 'js-cookie';
 
 export function Profile() {
   const { level } = useContext(ChallengesContext);
-  const { fetchData } = useContext(LoginContext);
 
-  console.log(fetchData);
+  let id = Cookies.get('id');
+  let avatar_url = Cookies.get('avatar_url');
+  let name = Cookies.get('name');
 
   return (
     <div className={styles.profileContainer}>
-      <img src='https://github.com/SaMatheus.png' alt='Matheus Sá' />
+      <img src={avatar_url} alt={`foto de ${name}`} />
       <div>
-        <strong>Matheus Sá</strong>
+        <strong>{name}</strong>
         <p>
           <img src='icons/level.svg' alt='level' />
           Level {level}

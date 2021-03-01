@@ -1,15 +1,18 @@
 import Head from 'next/head';
 
+import Cookies from 'js-cookie';
+
 import styles from '../styles/pages/Login.module.css';
 // HOOKS
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-
-import { useLogin } from '../contexts/LoginContext';
+import { useState, useContext, useEffect } from 'react';
 
 export default function Login() {
+  const [saveData, setSaveData] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const { fetchError, isValid, fetchGithubAPI } = useLogin();
+  const [fetchData, setFetchData] = useState(null);
+  const [isValid, setIsValid] = useState(false);
+  const [fetchError, setFetchError] = useState('');
   const router = useRouter();
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -25,12 +28,40 @@ export default function Login() {
     }
   };
 
+  const fetchGithubAPI = () => {
+    fetch(`https://api.github.com/users/${inputValue.toLowerCase()}`)
+      .then((response) => {
+        if (response.status === 200) {
+          setFetchError('');
+          setIsValid(true);
+          return response.json();
+        }
+        if (response.status === 404) {
+          setIsValid(false);
+          return setFetchError('Usuário não encontrado');
+        } else {
+          setFetchError('Erro:' + response.status);
+        }
+      })
+      .then((json) => setFetchData(json));
+  };
+
   const handleLogin = () => {
-    fetchGithubAPI(inputValue);
+    fetchGithubAPI();
+
     if (isValid) {
+      setSaveData(true);
       router.push('/home');
     }
   };
+
+  useEffect(() => {
+    if (isValid && saveData) {
+      Cookies.set('id', String(fetchData.id));
+      Cookies.set('avatar_url', String(fetchData.avatar_url));
+      Cookies.set('name', String(fetchData.name));
+    }
+  }, [fetchGithubAPI]);
 
   return (
     <div className={styles.container}>
