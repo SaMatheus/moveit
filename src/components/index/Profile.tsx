@@ -6,7 +6,6 @@ import Cookies from 'js-cookie';
 export function Profile() {
   const { level } = useContext(ChallengesContext);
 
-  let id = Cookies.get('id');
   let avatar_url = Cookies.get('avatar_url');
   let name = Cookies.get('name');
 

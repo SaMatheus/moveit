@@ -15,6 +15,7 @@ import { ChallengeBox } from '../components/index/ChallengeBox';
 // CONTEXT
 import { CountdownProvider } from '../contexts/CountDownContext';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
+import { NavBar } from '../components/NavBar';
 
 interface HomeProps {
   level: number;
@@ -40,6 +41,7 @@ export default function Home(props: HomeProps) {
               <Profile />
               <CompletedChallenges />
               <CountDown />
+              <NavBar />
             </div>
             <div>
               <ChallengeBox />

@@ -15,6 +15,8 @@ export default function Login() {
   const [fetchError, setFetchError] = useState('');
   const router = useRouter();
 
+  const time = setTimeout(() => {}, 1000);
+
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const button = document.getElementById('button');
     const newValue = e.currentTarget.value;
@@ -43,21 +45,15 @@ export default function Login() {
           setFetchError('Erro:' + response.status);
         }
       })
-      .then((json) => setFetchData(json));
-  };
-
-  const handleLogin = () => {
-    fetchGithubAPI();
-
-    if (isValid) {
-      setSaveData(true);
-      router.push('/home');
-    }
+      .then((json) => {
+        setFetchData(json);
+        router.push('/home');
+        setSaveData(true);
+      });
   };
 
   useEffect(() => {
     if (isValid && saveData) {
-      Cookies.set('id', String(fetchData.id));
       Cookies.set('avatar_url', String(fetchData.avatar_url));
       Cookies.set('name', String(fetchData.name));
     }
@@ -70,7 +66,7 @@ export default function Login() {
         <title>Login | Productiv.it</title>
       </Head>
       <section>
-        <img src='/login-logo.svg' alt='logomarca' />
+        <img src='/icons/login-logo.svg' alt='logomarca' />
         <div className={styles.content}>
           <h1>Bem-vindo</h1>
           <div className={styles.githubContent}>
@@ -83,7 +79,7 @@ export default function Login() {
               value={inputValue}
               onChange={handleInputChange}
             />
-            <button id='button' type='button' onClick={handleLogin}>
+            <button id='button' type='button' onClick={fetchGithubAPI}>
               <img src='/icons/arrow-vector.svg' alt='seta para a direita' />
             </button>
           </div>

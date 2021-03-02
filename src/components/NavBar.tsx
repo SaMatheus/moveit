@@ -2,30 +2,33 @@ import styles from '../styles/components/NavBar.module.css';
 
 import Link from 'next/link';
 
+import { FiLogOut, FiHome, FiAward } from 'react-icons/fi';
+
 export function NavBar() {
   return (
     <div className={styles.container}>
-      <img src='' alt='logomarca' />
-      <ul>
+      <img src='/icons/logo.svg' alt='logomarca' />
+
+      <ul className={styles.nav}>
         <li>
           <Link href='/home'>
-            <a>
-              <img src='/icons/home.svg' alt='home' />
+            <a href='/home'>
+              <FiHome />
             </a>
           </Link>
         </li>
         <li>
           <Link href='/ranking'>
-            <a>
-              <img src='/icons/award.svg' alt='awards' />
+            <a href='/ranking'>
+              <FiAward />
             </a>
           </Link>
         </li>
       </ul>
 
       <Link href='/'>
-        <a>
-          <img src='/icons/logout.svg' alt='logout' />
+        <a href='/'>
+          <FiLogOut />
         </a>
       </Link>
     </div>

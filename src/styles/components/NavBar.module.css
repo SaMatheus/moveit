@@ -1,2 +1,80 @@
 .container {
+  width: 110px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 2rem 0;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  background: var(--white);
+}
+
+.container > img {
+  width: 48px;
+  height: 42px;
+}
+
+.container > a > svg {
+  font-size: 26px;
+  transform: rotate(180deg);
+  color: var(--text);
+}
+
+.container svg:hover {
+  color: var(--blue);
+}
+
+.container ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  height: 150px;
+  width: 100%;
+
+  list-style: none;
+}
+
+.container ul li {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+}
+
+.container ul li:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  width: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 0 5px 5px 0;
+  background: var(--blue);
+}
+
+.container ul li:hover:before {
+  width: 4px;
+  transition: width 0.1s ease-in-out;
+}
+
+.container ul li svg {
+  font-size: 32px;
+  color: (--gray-line);
+}
+
+.container ul li:hover svg {
+  color: var(--blue);
 }
