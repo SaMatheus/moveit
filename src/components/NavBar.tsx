@@ -21,14 +21,14 @@ export function NavBar() {
       <img src='/icons/logo.svg' alt='logomarca' />
 
       <ul className={styles.nav}>
-        <li className={url === '/home' ? `` : ``}>
+        <li className={url === '/home' ? `${styles.navItem} ${styles.active}` : `${styles.navItem}`}>
           <Link href='/home'>
             <a href='/home'>
               <FiHome />
             </a>
           </Link>
         </li>
-        <li className={url === '/ranking' ? `` : ``}>
+        <li className={url === '/ranking' ? `${styles.navItem} ${styles.active}` : `${styles.navItem}`}>
           <Link href='/ranking'>
             <a href='/ranking'>
               <FiAward />
