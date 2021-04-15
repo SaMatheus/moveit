@@ -1,8 +1,12 @@
+// NEXT
 import Head from 'next/head';
 
+// JS-COOKIE
 import Cookies from 'js-cookie';
 
+// STYLES
 import styles from '../styles/pages/Login.module.css';
+
 // HOOKS
 import { useRouter } from 'next/router';
 import { useState, useContext, useEffect } from 'react';
@@ -15,7 +19,7 @@ export default function Login() {
   const [fetchError, setFetchError] = useState('');
   const router = useRouter();
 
-  const time = setTimeout(() => {}, 1000);
+  const time = setTimeout(() => { }, 1000);
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const button = document.getElementById('button');

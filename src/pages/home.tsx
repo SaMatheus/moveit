@@ -1,21 +1,26 @@
+// NEXT
 import Head from 'next/head';
-
 import { GetServerSideProps } from 'next';
 
 // STYLES
 import styles from '../styles/pages/Home.module.css';
 
 // COMPONENTS
+import { NavBar } from '../components/NavBar';
 import { ExperienceBar } from '../components/index/ExperienceBar';
 import { Profile } from '../components/index/Profile';
 import { CompletedChallenges } from '../components/index/CompletedChallenges';
 import { CountDown } from '../components/index/CountDown';
 import { ChallengeBox } from '../components/index/ChallengeBox';
 
+// HOOKS
+import { useContext, useEffect } from 'react';
+
 // CONTEXT
 import { CountdownProvider } from '../contexts/CountDownContext';
 import { ChallengesProvider } from '../contexts/ChallengesContext';
-import { NavBar } from '../components/NavBar';
+import { PathContext } from '../contexts/PathContext';
+
 
 interface HomeProps {
   level: number;
@@ -24,6 +29,12 @@ interface HomeProps {
 }
 
 export default function Home(props: HomeProps) {
+  const { setUrl } = useContext(PathContext)
+
+  useEffect(() => {
+    setUrl(`${window.location.pathname}`)
+  })
+
   return (
     <ChallengesProvider
       level={props.level}
